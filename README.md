@@ -1,4 +1,4 @@
-#Project Based Experiments
+# Project Based Experiments
 ## Objective :
  Build a Multilayer Perceptron (MLP) to classify handwritten digits in python
 ## Steps to follow:
@@ -28,9 +28,56 @@ If the model is not performing well, experiment with different architectures, re
 Visualize the training/validation loss and accuracy over epochs to understand the training process. Visualize some misclassified examples to gain insights into potential improvements.
 
 # Program:
-Insert your code here
+
+```
+DEVELOPED BY: ANISH RAJ P
+REG NO: 212222230010
+```
+```python
+import tensorflow as tf
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten
+
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+x_train, x_test = x_train / 255.0, x_test / 255.0
+
+model = Sequential([
+    Flatten(input_shape=(28, 28)),
+    Dense(128, activation='relu'),
+    Dense(64, activation='relu'),
+    Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train, epochs=5, batch_size=32, validation_data=(x_test, y_test))
+
+test_loss, test_accuracy = model.evaluate(x_test, y_test)
+print(f'Test accuracy: {test_accuracy}')
+
+import matplotlib.pyplot as plt
+
+predictions = model.predict(x_test)
+
+plt.figure(figsize=(10, 5))
+for i in range(5):
+    plt.subplot(1, 5, i + 1)
+    plt.imshow(x_test[i], cmap='gray')
+    plt.axis('off')
+    plt.title(f"Predicted: {tf.argmax(predictions[i]).numpy()}\nActual: {y_test[i]}")
+plt.show()
+
+```
 
 ## Output:
-Show your results here
+![Output](5.png)
+
+
+## RESULT:
+Thus, a Multilayer Perceptron (MLP) to classify handwritten digits in python is successfully executed
 
 
